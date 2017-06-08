@@ -1,43 +1,49 @@
-// Helpers/Settings.cs
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
 namespace MaratonaApp.Helpers
 {
-  /// <summary>
-  /// This is the Settings static class that can be used in your Core solution or in any
-  /// of your client applications. All settings are laid out the same exact way with getters
-  /// and setters. 
-  /// </summary>
-  public static class Settings
-  {
-    private static ISettings AppSettings
+
+    public static class Settings
     {
-      get
-      {
-        return CrossSettings.Current;
-      }
+        /// <summary>
+        /// Current platform information
+        /// </summary>
+        private static ISettings AppSettings => CrossSettings.Current;
+
+        /// <summary>
+        /// User Identification key/value pair
+        /// </summary>
+        private const string UserIdKey = "userid";
+        private static readonly string UserIdDefault = string.Empty;
+
+        /// <summary>
+        /// Authentication token key/value pair
+        /// </summary>
+        private const string AuthTokenKey = "authtoken";
+        private static readonly string AuthTokenDefault = string.Empty;
+
+        /// <summary>
+        /// Public authentication token property
+        /// </summary>
+        public static string AuthToken
+        {
+            get { return AppSettings.GetValueOrDefault<string>(AuthTokenKey, AuthTokenDefault); }
+            set { AppSettings.AddOrUpdateValue<string>(AuthTokenKey, value); }
+        }
+
+        /// <summary>
+        /// Public user identification property
+        /// </summary>
+        public static string UserId
+        {
+            get { return AppSettings.GetValueOrDefault<string>(UserId, UserIdDefault); }
+            set { AppSettings.AddOrUpdateValue<string>(UserId, value); }
+        }
+
+        /// <summary>
+        /// Store if user's already signed in
+        /// </summary>
+        public static bool isLoggedIn => !string.IsNullOrWhiteSpace(UserId);
     }
-
-    #region Setting Constants
-
-    private const string SettingsKey = "settings_key";
-    private static readonly string SettingsDefault = string.Empty;
-
-    #endregion
-
-
-    public static string GeneralSettings
-    {
-      get
-      {
-        return AppSettings.GetValueOrDefault<string>(SettingsKey, SettingsDefault);
-      }
-      set
-      {
-        AppSettings.AddOrUpdateValue<string>(SettingsKey, value);
-      }
-    }
-
-  }
 }
