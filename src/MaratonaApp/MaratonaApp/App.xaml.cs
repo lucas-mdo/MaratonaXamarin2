@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using MaratonaApp.Views;
 using Xamarin.Forms;
 
 namespace MaratonaApp
@@ -13,7 +13,7 @@ namespace MaratonaApp
         {
             InitializeComponent();
 
-            MainPage = new MaratonaApp.MainPage();
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

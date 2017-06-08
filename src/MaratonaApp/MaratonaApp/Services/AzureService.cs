@@ -2,6 +2,7 @@
 using MaratonaApp.Authentication;
 using MaratonaApp.Helpers;
 using MaratonaApp.Services;
+using MaratonaApp.ViewModels;
 using Microsoft.WindowsAzure.MobileServices;
 using Xamarin.Forms;
 

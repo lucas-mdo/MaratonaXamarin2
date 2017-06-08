@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MaratonaApp.Views.ProfilePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+             x:Class="MaratonaApp.Views.ProfilePage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <Label Text="User Id" TextColor="Black" FontSize="Small"/>
+            <Label Text="{Binding UserId}" TextColor="Gray" FontSize="Medium"/>
+            <Label Text="Auth Token" TextColor="Black" FontSize="Small"/>
+            <Label Text="{Binding Token}" TextColor="Gray" FontSize="Medium"/>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

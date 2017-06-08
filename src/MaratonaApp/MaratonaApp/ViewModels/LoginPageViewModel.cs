@@ -2,54 +2,43 @@
 using System.Windows.Input;
 using MaratonaApp.Helpers;
 using MaratonaApp.Services;
-using MaratonaApp.Views;
 using Xamarin.Forms;
 
 namespace MaratonaApp.ViewModels
 {
-    public class LoginPageViewModel
+    public class LoginPageViewModel : MyBaseViewModel
     {
-        private AzureService azureService;
-        private INavigation navigation;
+        private readonly AzureService _azureService;
 
-        private ICommand loginCommand;
+        public ICommand LoginCommand { get; }
 
-        public ICommand LoginCommand =>
-            loginCommand ?? (loginCommand = new Command(async () => await ExecuteLoginCommandAsync()));
-
-        public LoginPageViewModel(INavigation nav)
+        public LoginPageViewModel()
         {
-            azureService = DependencyService.Get<AzureService>();
-            navigation = nav;
+            _azureService = DependencyService.Get<AzureService>();
 
-            //Title = "Maratona Xamarin 2"
+            LoginCommand = new Command(async () => await ExecuteLoginCommandAsync());
+
+            Title = "Maratona Xamarin 2";
         }
 
         private async Task ExecuteLoginCommandAsync()
         {
-            if (IsBusy || !(await LoginAsync()))
+            if (IsBusy || !await LoginAsync())
                 return;
             else
             {
-                var profilePage = new ProfilePage();
-                await navigation.PushAsync(profilePage);
-
-                RemovePageFromStack();
+                await PushAsync<ProfilePageViewModel>();
             }
         }
 
-        private void RemovePageFromStack()
-        {
-            
-        }
-
-        public Task<bool> LoginAsync()
+        public async Task<bool> LoginAsync()
         {
             if (Settings.isLoggedIn)
-                return Task.FromResult(true);
+                return await Task.FromResult(true);
 
             //User not logged in, call login method
-            return azureService.LoginAsync();
+            return await _azureService.LoginAsync();
+            
         }
     }
 }
